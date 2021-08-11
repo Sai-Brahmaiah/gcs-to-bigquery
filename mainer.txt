@@ -10,14 +10,14 @@ def load_csv_to_bq(data, context):
         job_config.write_disposition = 'WRITE_TRUNCATE'
         job_config.schema = [
                 bigquery.SchemaField('id', 'INTEGER'),
-                bigquery.SchemaField('emp_id', 'STRING'),
+                bigquery.SchemaField('eid', 'STRING'),
                 bigquery.SchemaField('name', 'STRING'),
                 ]
         job_config.skip_leading_rows = 1
         job_config.source_format = bigquery.SourceFormat.CSV
 
         # get the URI for uploaded CSV in GCS from 'data'
-        uri = 'gs://harishsurya/*.csv'
+        uri = 'gs://bucket/*.csv'
 
         # load the data into BQ
         load_job = client.load_table_from_uri(
@@ -27,3 +27,11 @@ def load_csv_to_bq(data, context):
 
         load_job.result()  # wait for table load to complete.
         print('Job finished.')
+
+Note:
+        # in the above dataset we need to specify the dataset in global variables
+        exp:
+        key               value
+        DATASET           ur dataset name
+        TABLE             ur table name
+        
